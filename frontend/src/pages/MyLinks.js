@@ -7,12 +7,21 @@ const MyLinks = () => {
         const response = await fetch('http://127.0.0.1:8000/api/link/get-links/')
         const data = await response.json()
         setLinks(data)
-        console.log(data)
     }
 
     useEffect(() => {
         getLinks()
     }, [])
+
+    const handleDelete = async(hash) => {
+        await fetch(`http://127.0.0.1:8000/api/link/delete-link/${hash}`, {
+            method:"DELETE",
+            header:{
+                "Content-Type":"application/json"
+            }
+        })
+        getLinks()
+    }
 
   return (
     <div className="container-sm mt-5">
@@ -21,7 +30,7 @@ const MyLinks = () => {
                 <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                     <Link className="w-50" to={link.source_link} target="_blank">{link.source_link.slice(0,50)}{link.source_link.length>50 ? "..." : ""}</Link>
                     <Link className="" to={`/link/${link.hash}`} target="_blank">https://mydomain.com/link/{link.hash}</Link>
-                    <div className="btn btn-danger">delete</div>
+                    <div  onClick={()=>(handleDelete(link.hash))} className="btn btn-danger">delete</div>
                 </li>
             ))}
             

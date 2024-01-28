@@ -24,3 +24,9 @@ def get_links(request):
     links = MyLink.objects.all()
     serializer = LinkSerialiser(links, many=True)
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def delete_link(request, hash):
+    link = get_object_or_404(MyLink, hash=hash)
+    link.delete()
+    return Response('Link got deleted!')
