@@ -1,17 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const MyLinks = () => {
+    const [ links, setLinks ] = useState([])
+    const getLinks = async() => {
+        const response = await fetch('http://127.0.0.1:8000/api/link/get-links/')
+        const data = await response.json()
+        setLinks(data)
+        console.log(data)
+    }
+
+    useEffect(() => {
+        getLinks()
+    }, [])
+
   return (
     <div className="container-sm mt-5">
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>First Link</div>
-                <div className="btn btn-danger">delete</div>
-            </li>
-            <li class="list-group-item">A second item</li>
-            <li class="list-group-item">A third item</li>
-            <li class="list-group-item">A fourth item</li>
-            <li class="list-group-item">And a fifth one</li>
+        <ul className="list-group">
+            {links.map((link, index) => (
+                <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                    <Link className="w-50" to={link.source_link} target="_blank">{link.source_link.slice(0,50)}{link.source_link.length>50 ? "..." : ""}</Link>
+                    <Link className="" to={`/link/${link.hash}`} target="_blank">https://mydomain.com/link/{link.hash}</Link>
+                    <div className="btn btn-danger">delete</div>
+                </li>
+            ))}
+            
         </ul>
     </div>
   )

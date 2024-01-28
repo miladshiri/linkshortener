@@ -18,3 +18,9 @@ def get_link(request, hash):
     link = get_object_or_404(MyLink, hash=hash)
     serializer = LinkSerialiser(link, many=False)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def get_links(request):
+    links = MyLink.objects.all()
+    serializer = LinkSerialiser(links, many=True)
+    return Response(serializer.data)

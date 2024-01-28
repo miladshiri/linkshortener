@@ -32,14 +32,14 @@ const MainPage = () => {
     }
   return (
     <div className="container-md mt-5">
-        <form class="d-flex" role="search" onSubmit={handleCreateSubmit}>
-            <input onChange={(e) => (handleLinkFieldChange(e.target.value))} class="form-control me-2" name="link_field" type="search" placeholder="Search" aria-label="Search"/>
-            <button class="btn btn-outline-success" type="submit">Make Short!</button>
+        <form className="d-flex" role="search" onSubmit={handleCreateSubmit}>
+            <input onChange={(e) => (handleLinkFieldChange(e.target.value))} className="form-control me-2" name="link_field" type="search" placeholder="Search" aria-label="Search"/>
+            <button className="btn btn-outline-success" type="submit">Make Short!</button>
         </form>
         <div className="container-sm mt-5">
         <h2 className="fw-bold">Shorted Link: </h2> 
-            <div class="card">
-                <div class="card-body">
+            <div className="card">
+                <div className="card-body">
                     <Link to={`/link/${myLink.hash }`} target="_blank">
                     https://mydomain.com/link/{ myLink?.hash }
                     </Link>
