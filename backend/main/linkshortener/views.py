@@ -1,17 +1,20 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 from .models import MyLink
 from .serializers import LinkSerialiser
 
 @api_view(['POST'])
 def create_link(request):
-    # my_link = MyLink.objects.create()
-    # link = request.get['link']
-    print(request.data)
     serializer = LinkSerialiser(data=request.data)
     if serializer.is_valid():
         serializer.save()
     
-    print(serializer.data)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_link(request, hash):
+    link = get_object_or_404(MyLink, hash=hash)
+    serializer = LinkSerialiser(link, many=False)
     return Response(serializer.data)

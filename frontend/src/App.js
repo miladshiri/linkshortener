@@ -5,6 +5,7 @@ import Header from './components/Header'
 import MainPage from './pages/MainPage'
 import MyLinks from './pages/MyLinks'
 import Footer from './components/Footer'
+import Redirect from './pages/Redirect'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path='/' exact element={<MainPage />} />
             <Route path='/mylinks/' exact element={<MyLinks />} />
+            <Route path='/link/:hash' exact element={<Redirect />} />
           </Routes>
         </div>
         <div className="footer">
