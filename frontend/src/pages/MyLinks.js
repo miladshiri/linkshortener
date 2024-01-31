@@ -1,10 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+
+import UserContext from '../context/UserContext'
 
 const MyLinks = () => {
     const [ links, setLinks ] = useState([])
+    const { userInfo, updateUserInfo } = useContext(UserContext);
+
     const getLinks = async() => {
-        const response = await fetch('http://127.0.0.1:8000/api/link/get-links/')
+        const response = await fetch('http://127.0.0.1:8000/api/link/get-links/',{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${userInfo.access_token}`,
+            }
+        })
         const data = await response.json()
         setLinks(data)
     }
@@ -16,8 +26,9 @@ const MyLinks = () => {
     const handleDelete = async(hash) => {
         await fetch(`http://127.0.0.1:8000/api/link/delete-link/${hash}`, {
             method:"DELETE",
-            header:{
-                "Content-Type":"application/json"
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": `Bearer ${userInfo.access_token}`,
             }
         })
         getLinks()

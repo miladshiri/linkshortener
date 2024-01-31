@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createContext, useContext } from 'react'
 import { Link } from 'react-router-dom'
+
+import UserContext from '../context/UserContext'
 
 const MainPage = () => {
 
     const [ myLink, setMyLink ] = useState([])
     const [ sourceLink, setSourceLink ] = useState([])
+    const { userInfo, updateUserInfo } = useContext(UserContext);
 
     const createLink = async () => {
         const response = await fetch('http://127.0.0.1:8000/api/link/shortener/', {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userInfo.access_token}`,
             },
             body:JSON.stringify({
                 "source_link": sourceLink,
@@ -28,8 +32,9 @@ const MainPage = () => {
         event.preventDefault();
 
         createLink()
-
     }
+
+
   return (
     <div className="container-md mt-5">
         <form className="d-flex" role="search" onSubmit={handleCreateSubmit}>
@@ -37,7 +42,7 @@ const MainPage = () => {
             <button className="btn btn-outline-success" type="submit">Make Short!</button>
         </form>
         <div className="container-sm mt-5">
-        <h2 className="fw-bold">Shorted Link: </h2> 
+        <h2 className="fw-bold">Shorted Link: </h2>
             <div className="card">
                 <div className="card-body">
                     <Link to={`/link/${myLink.hash }`} target="_blank">

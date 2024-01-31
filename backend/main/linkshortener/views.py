@@ -1,4 +1,5 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
@@ -6,6 +7,7 @@ from .models import MyLink
 from .serializers import LinkSerialiser
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_link(request):
     serializer = LinkSerialiser(data=request.data)
     if serializer.is_valid():
@@ -20,12 +22,14 @@ def get_link(request, hash):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_links(request):
     links = MyLink.objects.all()
     serializer = LinkSerialiser(links, many=True)
     return Response(serializer.data)
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_link(request, hash):
     link = get_object_or_404(MyLink, hash=hash)
     link.delete()
