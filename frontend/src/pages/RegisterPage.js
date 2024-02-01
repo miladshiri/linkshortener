@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const navigate = useNavigate()
+
     const [ form, setForm ] = useState([])
-    const doLogin = async() => {
-        const response = await fetch('/api/user/token/', {
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        setForm({...form, [name]:value})
+    }
+
+    const doRegister = async() => {
+        const response = await fetch('/api/user/register/', {
             method:"POST",
             headers:{
                 "Content-Type":"application/json"   
@@ -14,35 +21,32 @@ const LoginPage = () => {
         })
 
         if (response.ok) {
-            const data = await response.json()
-            localStorage.setItem('access_key', data.access);
-            navigate('/')
-            window.location.reload();
+            navigate('/login/')
         }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        doLogin()
+        doRegister()
     }
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target
-        setForm({...form, [name]:value})
-    }
   return (
     <form className="container-sm w-25">
         <div className="mb-3">
-            <label for="username" className="form-label">Email address</label>
+            <label for="username" className="form-label">username</label>
             <input onChange={handleInputChange} type="text"className="form-control" name="username" aria-describedby="emailHelp"/>
         </div>
         <div className="mb-3">
             <label for="exampleInputPassword1" className="form-label">Password</label>
             <input onChange={handleInputChange} type="password"  className="form-control" name="password"/>
         </div>
-        <button onClick={handleSubmit} type="submit" className="btn btn-primary">Login</button>
+        <div className="mb-3">
+            <label for="exampleInputPassword2" className="form-label">Repeat Password</label>
+            <input onChange={handleInputChange} type="password"  className="form-control" name="password2"/>
+        </div>
+        <button onClick={handleSubmit} type="submit" className="btn btn-primary">Register</button>
     </form>
   )
 }
 
-export default LoginPage
+export default RegisterPage

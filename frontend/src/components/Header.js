@@ -11,7 +11,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
-            Navbar
+            Shortener!
           </a>
           <button
             className="navbar-toggler"
@@ -45,7 +45,11 @@ const Header = () => {
                   </>
                       
                 ) : (
+                  <div className="d-flex align-items-center">
                     <Link className="nav-link" to='/login/'>Login</Link>
+                    /
+                    <Link className="nav-link" to='/register/'>Register</Link>
+                  </div>
                 ) }
                 
               </li>

@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import Redirect from './pages/Redirect'
 import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
+import RegisterPage from './pages/RegisterPage'
 
 import UserContext from './context/UserContext'
 
@@ -55,6 +56,7 @@ function App() {
               <Route path='/' exact element={<MainPage />} />
               <Route path='/login/' element={<LoginPage />} />
               <Route path='/logout/' element={<LogoutPage />} />
+              <Route path='/register/' element={<RegisterPage />} />
               <Route path='/mylinks/' element={<MyLinks />} />
               <Route path='/link/:hash' element={<Redirect />} />
             </Routes>
