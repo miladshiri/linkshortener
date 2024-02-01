@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import UserContext from '../context/UserContext'
 
 const MyLinks = () => {
     const [ links, setLinks ] = useState([])
     const { userInfo, updateUserInfo } = useContext(UserContext);
+    const navigate = useNavigate()
 
     const getLinks = async() => {
         const response = await fetch('http://127.0.0.1:8000/api/link/get-links/',{
@@ -20,7 +21,13 @@ const MyLinks = () => {
     }
 
     useEffect(() => {
-        getLinks()
+        console.log(userInfo)
+        if (userInfo.access_token) {
+            getLinks()
+        }
+        else {
+            navigate('/login/')
+        }
     }, [])
 
     const handleDelete = async(hash) => {

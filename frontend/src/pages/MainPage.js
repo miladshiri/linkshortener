@@ -10,12 +10,17 @@ const MainPage = () => {
     const { userInfo, updateUserInfo } = useContext(UserContext);
 
     const createLink = async () => {
+        const headers = {
+            "Content-Type": "application/json",
+        }
+
+        if (userInfo.access_token) {
+            headers["Authorization"] = `Bearer ${userInfo.access_token}`
+        }
+
         const response = await fetch('http://127.0.0.1:8000/api/link/shortener/', {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${userInfo.access_token}`,
-            },
+            headers: headers,
             body:JSON.stringify({
                 "source_link": sourceLink,
             })

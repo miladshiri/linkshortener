@@ -17,6 +17,7 @@ const LoginPage = () => {
             const data = await response.json()
             localStorage.setItem('access_key', data.access);
             navigate('/')
+            window.location.reload();
         }
     }
 
