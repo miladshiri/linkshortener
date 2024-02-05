@@ -11,7 +11,10 @@ from .serializers import LinkSerialiser
 def create_link(request):
     serializer = LinkSerialiser(data=request.data)
     if serializer.is_valid():
-        serializer.save(user=request.user)
+        if request.user.is_anonymous:
+            serializer.save()
+        else:
+            serializer.save(user=request.user)
     
     return Response(serializer.data)
 
