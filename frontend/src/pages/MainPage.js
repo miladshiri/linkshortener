@@ -18,7 +18,7 @@ const MainPage = () => {
             headers["Authorization"] = `Bearer ${userInfo.access_token}`
         }
 
-        const response = await fetch('http://127.0.0.1:8000/api/link/shortener/', {
+        const response = await fetch('/api/link/shortener/', {
             method: "POST",
             headers: headers,
             body:JSON.stringify({

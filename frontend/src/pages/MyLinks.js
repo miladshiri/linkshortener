@@ -21,7 +21,6 @@ const MyLinks = () => {
     }
 
     useEffect(() => {
-        console.log(userInfo)
         if (userInfo.access_token) {
             getLinks()
         }
